@@ -12,6 +12,7 @@ spec = do
             humanReadable (Amount USD 540.256)  `shouldBe` "USD 540.26"
             humanReadable (Amount USD 300.251)  `shouldBe` "USD 300.25"
             humanReadable (Amount USD 3.4)  `shouldBe` "USD 3.40"
+            humanReadable (Amount EUR 15.589)  `shouldBe` "EUR 15.59"
 
         it "respects currency decimal digits" $ do
             humanReadable (Amount CLP 345.35)  `shouldBe` "CLP 345"
@@ -32,3 +33,8 @@ spec = do
             humanReadableWith config (Amount USD 23.50)  `shouldBe` "$ 23.50"
             humanReadableWith config (Amount EUR 15.589)  `shouldBe` "€ 15.59"
             humanReadableWith config (Amount BTC 0.5898)  `shouldBe` "B 0.58980000"
+
+        it "can use a custom decimal separator" $ do
+            let config = defaultConfig { decimalSeparator = ',' }
+            humanReadableWith config (Amount USD 23.50)  `shouldBe` "USD 23,50"
+            humanReadableWith config (Amount EUR 15.589)  `shouldBe` "EUR 15,59"

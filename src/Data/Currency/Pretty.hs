@@ -11,7 +11,10 @@ humanReadable = humanReadableWith defaultConfig
 -- | Pretty print a monetary amount with a custom configuration
 humanReadableWith :: (Currency c) => PrettyConfig -> Amount c -> String
 humanReadableWith cnf (Amount currency amount) =
-    prefixSymbol currency cnf $ prefixCode currency cnf $ toDecimalString currency cnf amount
+    prefixSymbol currency cnf
+    $ prefixCode currency cnf
+    $ changeDecimalSep currency cnf
+    $ toDecimalString currency cnf amount
 
 prefixSymbol :: (Currency c) => c -> PrettyConfig -> String -> String
 prefixSymbol currency cnf val
@@ -23,6 +26,15 @@ prefixCode currency cnf val
     | useCurrencySymbol cnf = val
     | suffixIsoCode cnf = val <> " " <> (isoCode currency)
     | otherwise = (isoCode currency) <> " " <> val
+
+changeDecimalSep :: (Currency c) => c -> PrettyConfig -> String -> String
+changeDecimalSep currency cnf val = replaceFst '.' (decimalSeparator cnf) val
+    where
+        replaceFst :: Char -> Char -> String -> String
+        replaceFst c c' [] = []
+        replaceFst c c' (s:ss)
+            | s == c = c' : ss
+            | otherwise = s : replaceFst c c' ss
 
 toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
