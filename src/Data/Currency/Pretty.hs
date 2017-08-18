@@ -1,15 +1,19 @@
 module Data.Currency.Pretty where
 
-import Data.Text
+import Text.Printf
 import Data.Currency.Currencies
+import Data.Monoid ((<>))
 
 -- | Pretty print a monetary amount using 'defaultConfig'
-humanReadable :: (IsCurrency c) => Amount c -> Text
+humanReadable :: (Currency c) => Amount c -> String
 humanReadable = humanReadableWith defaultConfig
 
 -- | Pretty print a monetary amount with a custom configuration
-humanReadableWith :: (IsCurrency c) => PrettyConfig -> Amount c -> Text
-humanReadableWith cnf amount = pack $ show amount
+humanReadableWith :: (Currency c) => PrettyConfig -> Amount c -> String
+humanReadableWith cnf (Amount currency amount) =
+    case symbol currency of
+        Nothing -> error "No symbol for this currency"
+        Just sym -> sym <> (printf ("%." <> (show $ decimalDigits currency) <> "f") amount)
 
 
 defaultConfig :: PrettyConfig
