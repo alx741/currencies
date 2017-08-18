@@ -11,9 +11,14 @@ humanReadable = humanReadableWith defaultConfig
 -- | Pretty print a monetary amount with a custom configuration
 humanReadableWith :: (Currency c) => PrettyConfig -> Amount c -> String
 humanReadableWith cnf (Amount currency amount) =
-    case symbol currency of
-        Nothing -> error "No symbol for this currency"
-        Just sym -> sym <> (printf ("%." <> (show $ decimalDigits currency) <> "f") amount)
+    prefixCode currency $ toDecimalString currency amount
+
+prefixCode :: (Currency c) => c -> String -> String
+prefixCode currency val = (isoCode currency) <> " " <> val
+
+toDecimalString :: (Currency c) => c  -> Double -> String
+toDecimalString currency amount = printf format amount
+    where format = "%." <> (show $ decimalDigits currency) <> "f"
 
 
 defaultConfig :: PrettyConfig
