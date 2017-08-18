@@ -4,10 +4,20 @@ module Data.Currency.Currencies
     ( -- * Currency Class
       IsCurrency(..)
 
+      -- * Monetary Amount
+      , Amount
+      , amount
+
       -- * Currencies
     , EUR(..)
     , USD(..)
     ) where
+
+data Amount a = Amount a Double
+
+-- | Create a monetary amount of a particular currency
+amount :: (IsCurrency c) => c -> Double -> Amount c
+amount = Amount
 
 class IsCurrency a where
     -- | ISO 4217 Currency Code
