@@ -31,3 +31,4 @@ spec = do
             let config = defaultConfig { useCurrencySymbol = True }
             humanReadableWith config (Amount USD 23.50)  `shouldBe` "$ 23.50"
             humanReadableWith config (Amount EUR 15.589)  `shouldBe` "€ 15.59"
+            humanReadableWith config (Amount BTC 0.5898)  `shouldBe` "B 0.58980000"

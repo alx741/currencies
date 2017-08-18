@@ -6,6 +6,7 @@ module Data.Currency.Currencies
       , Amount(..)
 
       -- * Currencies
+    , BTC(..)
     , CLP(..)
     , EUR(..)
     , USD(..)
