@@ -2,8 +2,8 @@ module Data.Currency.Currencies
     ( -- * Currency Class
       Currency(..)
 
-      -- * Monetary Amount
-      , Amount(..)
+    -- * Monetary Amount
+    , Amount(..)
 
       -- * Currencies
     , BTC(..)

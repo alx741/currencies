@@ -1,16 +1,24 @@
-module Data.Currency.Pretty where
+module Data.Currency.Pretty
+    ( -- * Configuration
+      PrettyConfig(..)
+    , defaultConfig
+
+      -- * Pretty printing
+    , prettyPrint
+    , prettyPrintWith
+    ) where
 
 import Text.Printf
 import Data.Currency.Currencies
 import Data.Monoid ((<>))
 
 -- | Pretty print a monetary amount using 'defaultConfig'
-humanReadable :: (Currency c) => Amount c -> String
-humanReadable = humanReadableWith defaultConfig
+prettyPrint :: (Currency c) => Amount c -> String
+prettyPrint = prettyPrintWith defaultConfig
 
 -- | Pretty print a monetary amount with a custom configuration
-humanReadableWith :: (Currency c) => PrettyConfig -> Amount c -> String
-humanReadableWith cnf (Amount currency amount) =
+prettyPrintWith :: (Currency c) => PrettyConfig -> Amount c -> String
+prettyPrintWith cnf (Amount currency amount) =
     prefixSymbol currency cnf
     $ prefixCode currency cnf
     $ changeDecimalSep currency cnf
@@ -58,6 +66,16 @@ intersperseN n s ss
     where (take, remainder) = splitAt n ss
 
 
+data PrettyConfig = PrettyConfig
+    { showDecimals :: Bool
+    , separateFourDigitAmounts :: Bool
+    , useCurrencySymbol :: Bool
+    , suffixIsoCode :: Bool
+    , largeAmountSeparator :: Char
+    , decimalSeparator :: Char
+    } deriving (Show)
+
+
 defaultConfig :: PrettyConfig
 defaultConfig = PrettyConfig
     { showDecimals = True
@@ -67,12 +85,3 @@ defaultConfig = PrettyConfig
     , largeAmountSeparator = ','
     , decimalSeparator = '.'
     }
-
-data PrettyConfig = PrettyConfig
-    { showDecimals :: Bool
-    , separateFourDigitAmounts :: Bool
-    , useCurrencySymbol :: Bool
-    , suffixIsoCode :: Bool
-    , largeAmountSeparator :: Char
-    , decimalSeparator :: Char
-    } deriving (Show)
