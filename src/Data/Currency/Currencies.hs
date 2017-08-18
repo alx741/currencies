@@ -25,7 +25,7 @@ class (Show c) => Currency c where
     -- | Number of digits after the decimal separator
     decimalDigits :: c -> Int
     -- | Currencty UTF8 symbol
-    symbol :: c -> Maybe String
+    symbol :: c -> String
 
     exchangeUSD :: c -> Float
     -- | ISO 3166-1 alpha-2 Country codes where the currency is used
@@ -45,7 +45,7 @@ instance Currency CLP where
     isoCode = show
     isoNumericCode _ = "152"
     decimalDigits _ = 0
-    symbol _ = Just "$"
+    symbol _ = "$"
     exchangeUSD _ = 0.0015
     countries _ = ["CL"]
 
@@ -54,7 +54,7 @@ instance Currency EUR where
     isoCode = show
     isoNumericCode _ = "978"
     decimalDigits _ = 2
-    symbol _ = Just "€"
+    symbol _ = "€"
     exchangeUSD _ = 1.17
     countries _ = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
@@ -65,7 +65,7 @@ instance Currency USD where
     isoCode = show
     isoNumericCode _ = "840"
     decimalDigits _ = 2
-    symbol _ = Just "$"
+    symbol _ = "$"
     exchangeUSD _ = 1.0
     countries _ = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
         , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]

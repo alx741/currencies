@@ -26,3 +26,8 @@ spec = do
             let config = defaultConfig { showDecimals = False }
             humanReadableWith config (Amount USD 23.50)  `shouldBe` "USD 24"
             humanReadableWith config (Amount USD 534.25)  `shouldBe` "USD 534"
+
+        it "can use the currency symbol" $ do
+            let config = defaultConfig { useCurrencySymbol = True }
+            humanReadableWith config (Amount USD 23.50)  `shouldBe` "$ 23.50"
+            humanReadableWith config (Amount EUR 15.589)  `shouldBe` "€ 15.59"
