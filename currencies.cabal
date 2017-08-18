@@ -1,6 +1,6 @@
 name:                currencies
 version:             0.1.0.0
-synopsis:            ISO 4217 Currencies
+synopsis:            ISO 4217 Currencies operations
 description:         Currency representation, pretty printing and conversion.
 homepage:            https://github.com/alx741/currencies#readme
 license:             BSD3

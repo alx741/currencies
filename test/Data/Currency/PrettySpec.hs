@@ -40,3 +40,7 @@ spec = do
             humanReadableWith config (Amount USD 23.50)  `shouldBe` "USD 23,50"
             humanReadableWith config (Amount EUR 15.589)  `shouldBe` "EUR 15,59"
             humanReadableWith config (Amount USD 23.0)  `shouldBe` "USD 23,00"
+
+        it "uses large amounts separators" $ do
+            humanReadable (Amount USD 32323.50)  `shouldBe` "USD 32,323.50"
+            humanReadable (Amount EUR 3827115.259)  `shouldBe` "EUR 3,827,115.26"

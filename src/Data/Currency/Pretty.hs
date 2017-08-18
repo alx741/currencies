@@ -14,6 +14,7 @@ humanReadableWith cnf (Amount currency amount) =
     prefixSymbol currency cnf
     $ prefixCode currency cnf
     $ changeDecimalSep currency cnf
+    $ largeAmountSeparate currency cnf
     $ toDecimalString currency cnf amount
 
 prefixSymbol :: (Currency c) => c -> PrettyConfig -> String -> String
@@ -36,11 +37,23 @@ changeDecimalSep currency cnf val = replaceFst '.' (decimalSeparator cnf) val
             | s == c = c' : ss
             | otherwise = s : replaceFst c c' ss
 
+largeAmountSeparate :: (Currency c) => c -> PrettyConfig -> String -> String
+largeAmountSeparate currency cnf amount =
+    let separated = reverse $ intersperseN 3 (largeAmountSeparator cnf) $ reverse integer
+    in separated ++ decimal
+    where (integer, decimal) = span (/= '.') amount
+
 toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
     | showDecimals cnf = printf format amount
     | otherwise = printf "%.0f" amount
     where format = "%." <> (show $ decimalDigits currency) <> "f"
+
+intersperseN :: Eq a => Int -> a -> [a] -> [a]
+intersperseN n s ss
+    | remainder == [] = ss
+    | otherwise = (take ++ [s]) ++ intersperseN n s remainder
+    where (take, remainder) = splitAt n ss
 
 
 defaultConfig :: PrettyConfig
