@@ -22,10 +22,10 @@ amount = Amount
 
 data CurrencyType = Circulating | Local | Fictional deriving (Show, Read, Eq)
 
-class IsCurrency a where
+class (Show c) => IsCurrency c where
     currencyType :: CurrencyType
     -- | ISO 4217 Currency Code
-    isoCode :: a -> String
+    isoCode :: c -> String
     -- | ISO 4217 Currency Numeric Code
     isoNumericCode :: String
     -- | Number of digits after the decimal separator
@@ -48,7 +48,7 @@ instance IsCurrency USD where
     isoCode = show
     isoNumericCode = "840"
     decimalDigits = 2
-    symbol = "$"
+    symbol = Just "$"
     exchangeUSD = 1.0
     countries = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
         , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]
@@ -58,7 +58,7 @@ instance IsCurrency EUR where
     isoCode = show
     isoNumericCode = "978"
     decimalDigits = 2
-    symbol = "€"
+    symbol = Just "€"
     exchangeUSD = 1.17
     countries = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
