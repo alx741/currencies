@@ -49,3 +49,8 @@ spec = do
             let config = defaultConfig { largeAmountSeparator = ' ' }
             humanReadableWith config (Amount USD 32323.50)  `shouldBe` "USD 32 323.50"
             humanReadableWith config (Amount EUR 3827115.259)  `shouldBe` "EUR 3 827 115.26"
+
+        it "can avoid separating 4 digit amounts" $ do
+            humanReadable (Amount USD 2323.50)  `shouldBe` "USD 2323.50"
+            humanReadable (Amount EUR 4629.25)  `shouldBe` "EUR 4629.25"
+            humanReadable (Amount USD 23875.00)  `shouldBe` "USD 23,875.00"

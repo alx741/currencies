@@ -38,10 +38,12 @@ changeDecimalSep currency cnf val = replaceFst '.' (decimalSeparator cnf) val
             | otherwise = s : replaceFst c c' ss
 
 largeAmountSeparate :: (Currency c) => c -> PrettyConfig -> String -> String
-largeAmountSeparate currency cnf amount =
-    let separated = reverse $ intersperseN 3 (largeAmountSeparator cnf) $ reverse integer
-    in separated ++ decimal
-    where (integer, decimal) = span (/= '.') amount
+largeAmountSeparate currency cnf amount
+    | separateFourDigitAmounts cnf = separated ++ decimal
+    | otherwise = if length integer <= 4 then amount else separated ++ decimal
+    where
+        (integer, decimal) = span (/= '.') amount
+        separated = reverse $ intersperseN 3 (largeAmountSeparator cnf) $ reverse integer
 
 toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
