@@ -1,12 +1,9 @@
-{-# LANGUAGE AllowAmbiguousTypes #-}
-
 module Data.Currency.Currencies
     ( -- * Currency Class
-      IsCurrency(..)
+      Currency(..)
 
       -- * Monetary Amount
-      , Amount
-      , amount
+      , Amount(..)
 
       -- * Currencies
     , EUR(..)
@@ -16,26 +13,22 @@ module Data.Currency.Currencies
 -- | Monetary amounts
 data Amount a = Amount a Double deriving (Show, Read, Eq, Ord) -- FIXME: Ord manual instance
 
--- | Create a monetary amount of a particular currency
-amount :: (IsCurrency c) => c -> Double -> Amount c
-amount = Amount
-
 data CurrencyType = Circulating | Local | Fictional deriving (Show, Read, Eq)
 
-class (Show c) => IsCurrency c where
-    currencyType :: CurrencyType
+class (Show c) => Currency c where
+    currencyType :: c -> CurrencyType
     -- | ISO 4217 Currency Code
     isoCode :: c -> String
     -- | ISO 4217 Currency Numeric Code
-    isoNumericCode :: String
+    isoNumericCode :: c -> String
     -- | Number of digits after the decimal separator
-    decimalDigits :: Int
+    decimalDigits :: c -> Int
     -- | Currencty UTF8 symbol
-    symbol :: Maybe String
+    symbol :: c -> Maybe String
 
-    exchangeUSD :: Float
+    exchangeUSD :: c -> Float
     -- | ISO 3166-1 alpha-2 Country codes where the currency is used
-    countries :: [String]
+    countries :: c -> [String]
 
 -- | US Dollar
 data USD = USD deriving (Show)
@@ -43,23 +36,23 @@ data USD = USD deriving (Show)
 -- | Europian Union Euro
 data EUR = EUR deriving (Show)
 
-instance IsCurrency USD where
-    currencyType = Circulating
+instance Currency USD where
+    currencyType _ = Circulating
     isoCode = show
-    isoNumericCode = "840"
-    decimalDigits = 2
-    symbol = Just "$"
-    exchangeUSD = 1.0
-    countries = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
+    isoNumericCode _ = "840"
+    decimalDigits _ = 2
+    symbol _ = Just "$"
+    exchangeUSD _ = 1.0
+    countries _ = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
         , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]
 
-instance IsCurrency EUR where
-    currencyType = Circulating
+instance Currency EUR where
+    currencyType _ = Circulating
     isoCode = show
-    isoNumericCode = "978"
-    decimalDigits = 2
-    symbol = Just "€"
-    exchangeUSD = 1.17
-    countries = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
+    isoNumericCode _ = "978"
+    decimalDigits _ = 2
+    symbol _ = Just "€"
+    exchangeUSD _ = 1.17
+    countries _ = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
         , "ME", "NL", "PT", "RE", "BL", "PM", "SM", "SK", "SI", "ES"]
