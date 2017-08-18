@@ -1,7 +1,8 @@
 {-# LANGUAGE AllowAmbiguousTypes #-}
 
 module Data.Currency.Currencies
-    ( IsCurrency(..)
+    ( -- * Currency Class
+      IsCurrency(..)
 
       -- * Currencies
     , EUR(..)
@@ -9,10 +10,15 @@ module Data.Currency.Currencies
     ) where
 
 class IsCurrency a where
-    currencyCode :: a -> String
-    currencyNumericCode :: String
+    -- | ISO 4217 Currency Code
+    isoCode :: a -> String
+    -- | ISO 4217 Currency Numeric Code
+    isoNumericCode :: String
+    -- | Number of digits after the decimal separator
     decimalDigits :: Int
-    convertionUSD :: Float
+    exchangeUSD :: Float
+    -- | ISO 3166-1 alpha-2 Country codes where the currency is used
+    countries :: [String]
 
 -- | US Dollar
 data USD = USD deriving (Show)
@@ -20,14 +26,19 @@ data USD = USD deriving (Show)
 -- | Europian Union Euro
 data EUR = EUR deriving (Show)
 
-instance IsCurrency EUR where
-    currencyCode = show
-    currencyNumericCode = ""
-    decimalDigits = 2
-    convertionUSD = 0.8
-
 instance IsCurrency USD where
-    currencyCode = show
-    currencyNumericCode = ""
+    isoCode = show
+    isoNumericCode = "840"
     decimalDigits = 2
-    convertionUSD = 1.0
+    exchangeUSD = 1.0
+    countries = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
+        , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]
+
+instance IsCurrency EUR where
+    isoCode = show
+    isoNumericCode = "978"
+    decimalDigits = 2
+    exchangeUSD = 1.17
+    countries = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
+        , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
+        , "ME", "NL", "PT", "RE", "BL", "PM", "SM", "SK", "SI", "ES"]
