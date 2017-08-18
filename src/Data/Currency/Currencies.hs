@@ -33,9 +33,12 @@ class (Show c) => Currency c where
     -- | Currency UTF-8 symbol
     symbol :: c -> String
 
-    exchangeUSD :: c -> Float
+    exchangeUSD :: c -> Double
     -- | ISO 3166-1 alpha-2 Country codes where the currency is used
     countries :: c -> [String]
+
+-- | Bitcoin
+data BTC = BTC deriving (Show)
 
 -- | Chilean Peso
 data CLP = CLP deriving (Show)
@@ -45,6 +48,16 @@ data EUR = EUR deriving (Show)
 
 -- | US Dollar
 data USD = USD deriving (Show)
+
+
+instance Currency BTC where
+    currencyType _ = Cryptocurrency
+    isoCode = show
+    isoNumericCode _ = ""
+    decimalDigits _ = 8
+    symbol _ = "B"
+    exchangeUSD _ = 4237.88
+    countries _ = []
 
 instance Currency CLP where
     currencyType _ = Circulating
