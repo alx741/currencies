@@ -17,3 +17,7 @@ spec = do
             humanReadable (Amount CLP 345.35)  `shouldBe` "CLP 345"
             humanReadable (Amount CLP 23.53)  `shouldBe` "CLP 24"
 
+        it "can use the currency code as suffix" $ do
+            let config = defaultConfig { suffixIsoCode = True }
+            humanReadableWith config (Amount USD 23.50)  `shouldBe` "23.50 USD"
+
