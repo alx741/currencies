@@ -6,6 +6,7 @@ module Data.Currency.Currencies
       , Amount(..)
 
       -- * Currencies
+    , CLP(..)
     , EUR(..)
     , USD(..)
     ) where
@@ -30,21 +31,23 @@ class (Show c) => Currency c where
     -- | ISO 3166-1 alpha-2 Country codes where the currency is used
     countries :: c -> [String]
 
--- | US Dollar
-data USD = USD deriving (Show)
+-- | Chilean Peso
+data CLP = CLP deriving (Show)
 
 -- | Europian Union Euro
 data EUR = EUR deriving (Show)
 
-instance Currency USD where
+-- | US Dollar
+data USD = USD deriving (Show)
+
+instance Currency CLP where
     currencyType _ = Circulating
     isoCode = show
-    isoNumericCode _ = "840"
-    decimalDigits _ = 2
+    isoNumericCode _ = "152"
+    decimalDigits _ = 0
     symbol _ = Just "$"
-    exchangeUSD _ = 1.0
-    countries _ = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
-        , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]
+    exchangeUSD _ = 0.0015
+    countries _ = ["CL"]
 
 instance Currency EUR where
     currencyType _ = Circulating
@@ -56,3 +59,13 @@ instance Currency EUR where
     countries _ = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
         , "ME", "NL", "PT", "RE", "BL", "PM", "SM", "SK", "SI", "ES"]
+
+instance Currency USD where
+    currencyType _ = Circulating
+    isoCode = show
+    isoNumericCode _ = "840"
+    decimalDigits _ = 2
+    symbol _ = Just "$"
+    exchangeUSD _ = 1.0
+    countries _ = ["US", "AS", "BB", "BM", "IO", "VG", "BQ", "EC", "MH"
+        , "FM", "MP", "PW", "PA", "PR", "TL", "TC", "VI"]

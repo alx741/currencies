@@ -12,3 +12,8 @@ spec = do
             humanReadable (Amount USD 540.256)  `shouldBe` "USD 540.26"
             humanReadable (Amount USD 300.251)  `shouldBe` "USD 300.25"
             humanReadable (Amount USD 3.4)  `shouldBe` "USD 3.40"
+
+        it "respects currency decimal digits" $ do
+            humanReadable (Amount CLP 345.35)  `shouldBe` "CLP 345"
+            humanReadable (Amount CLP 23.53)  `shouldBe` "CLP 24"
+
