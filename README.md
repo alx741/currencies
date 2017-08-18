@@ -1,1 +1,1 @@
-# friendly-currency
+# currencies
