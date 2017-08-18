@@ -20,4 +20,9 @@ spec = do
         it "can use the currency code as suffix" $ do
             let config = defaultConfig { suffixIsoCode = True }
             humanReadableWith config (Amount USD 23.50)  `shouldBe` "23.50 USD"
+            humanReadableWith config (Amount CLP 345.35)  `shouldBe` "345 CLP"
 
+        it "can omit decimals" $ do
+            let config = defaultConfig { showDecimals = False }
+            humanReadableWith config (Amount USD 23.50)  `shouldBe` "USD 24"
+            humanReadableWith config (Amount USD 534.25)  `shouldBe` "USD 534"

@@ -11,20 +11,21 @@ humanReadable = humanReadableWith defaultConfig
 -- | Pretty print a monetary amount with a custom configuration
 humanReadableWith :: (Currency c) => PrettyConfig -> Amount c -> String
 humanReadableWith cnf (Amount currency amount) =
-    prefixCode currency (suffixIsoCode cnf) $ toDecimalString currency amount
+    prefixCode currency (suffixIsoCode cnf) $ toDecimalString currency (showDecimals cnf) amount
 
 prefixCode :: (Currency c) => c -> Bool -> String -> String
 prefixCode currency False val = (isoCode currency) <> " " <> val
 prefixCode currency True val = val <> " " <> (isoCode currency)
 
-toDecimalString :: (Currency c) => c  -> Double -> String
-toDecimalString currency amount = printf format amount
+toDecimalString :: (Currency c) => c -> Bool -> Double -> String
+toDecimalString currency True amount = printf format amount
     where format = "%." <> (show $ decimalDigits currency) <> "f"
+toDecimalString currency False amount = printf "%.0f" amount
 
 
 defaultConfig :: PrettyConfig
 defaultConfig = PrettyConfig
-    { showFractions = True
+    { showDecimals = True
     , separateFourDigitAmounts = False
     , useCurrencySymbol = False
     , suffixIsoCode = False
@@ -33,7 +34,7 @@ defaultConfig = PrettyConfig
     }
 
 data PrettyConfig = PrettyConfig
-    { showFractions :: Bool
+    { showDecimals :: Bool
     , separateFourDigitAmounts :: Bool
     , useCurrencySymbol :: Bool
     , suffixIsoCode :: Bool
