@@ -14,7 +14,7 @@ module Data.Currency.Currencies
 -- | Monetary amounts
 data Amount a = Amount a Double deriving (Show, Read, Eq, Ord) -- FIXME: Ord manual instance
 
-data CurrencyType = Circulating | Local | Fictional deriving (Show, Read, Eq)
+data CurrencyType = Circulating | Supranational | Local | Fictional deriving (Show, Read, Eq)
 
 class (Show c) => Currency c where
     currencyType :: c -> CurrencyType
