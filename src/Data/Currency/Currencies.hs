@@ -14,7 +14,13 @@ module Data.Currency.Currencies
 -- | Monetary amounts
 data Amount a = Amount a Double deriving (Show, Read, Eq, Ord) -- FIXME: Ord manual instance
 
-data CurrencyType = Circulating | Supranational | Local | Fictional deriving (Show, Read, Eq)
+data CurrencyType
+  = Circulating -- ^ Currencies recognized as legal tender
+  | Local -- ^ Currencies with validity only in particular geographical localities
+  | Supranational -- ^ Currencies for procedural purposes and precious metals (X currencies)
+  | Cryptocurrency -- ^ Digital, cryptography based currencies
+  | Fictional -- ^ Currencies used in games, movies, novels, and other fictional setups
+  deriving (Show, Read, Eq)
 
 class (Show c) => Currency c where
     currencyType :: c -> CurrencyType
@@ -24,7 +30,7 @@ class (Show c) => Currency c where
     isoNumericCode :: c -> String
     -- | Number of digits after the decimal separator
     decimalDigits :: c -> Int
-    -- | Currencty UTF8 symbol
+    -- | Currency UTF-8 symbol
     symbol :: c -> String
 
     exchangeUSD :: c -> Float
@@ -34,7 +40,7 @@ class (Show c) => Currency c where
 -- | Chilean Peso
 data CLP = CLP deriving (Show)
 
--- | Europian Union Euro
+-- | European Union Euro
 data EUR = EUR deriving (Show)
 
 -- | US Dollar
