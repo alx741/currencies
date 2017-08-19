@@ -10,6 +10,7 @@ module Data.Currency.Pretty
 
 import Text.Printf
 import Data.Currency.Currencies
+import Data.Currency.Amounts
 import Data.Monoid ((<>))
 
 -- | Pretty print a monetary amount using 'defaultConfig'

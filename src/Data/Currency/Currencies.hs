@@ -3,21 +3,12 @@ module Data.Currency.Currencies
       CurrencyType(..)
     , Currency(..)
 
-      -- * Monetary Amount
-    , Amount(..)
-
       -- * Currencies
     , BTC(..)
     , CLP(..)
     , EUR(..)
     , USD(..)
     ) where
-
--- | Monetary amounts
-data Amount c = Amount c Double deriving (Show, Read, Eq)
-
-instance (Currency c) => Ord (Amount c) where
-    (Amount _ v1) <= (Amount _ v2) = v1 <= v2
 
 data CurrencyType
   = Circulating -- ^ Currencies recognized as legal tender
