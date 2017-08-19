@@ -1,8 +1,15 @@
 module Data.Currency.Amounts
-    where
-    -- ( -- * Monetary Amount
-    --   Amount(..)
-    -- ) where
+    ( -- * Monetary Amount
+      Amount(..)
+
+      -- * Conversions
+    , toUSD
+    , fromUSD
+    , convert
+
+      -- * Comparing
+    , compareAmounts
+    ) where
 
 import Data.Currency.Currencies
 
@@ -12,7 +19,7 @@ data Amount c = Amount c Double deriving (Show, Read, Eq)
 instance (Currency c) => Ord (Amount c) where
     (Amount _ v1) <= (Amount _ v2) = v1 <= v2
 
--- | Convert an 'Amount' to 'USD'
+-- | Convert an 'Amount' of an arbitrary currency to 'USD'
 toUSD :: (Currency c) => Amount c -> Amount USD
 toUSD (Amount c amount) = Amount USD $ amount * exchangeUSD c
 
@@ -24,6 +31,6 @@ fromUSD c (Amount USD amount) = Amount c $ amount / exchangeUSD c
 convert :: (Currency c', Currency c) => c' -> Amount c -> Amount c'
 convert c' amount = fromUSD c' $ toUSD amount
 
--- | Compare two 'Amount' values of different currencies
+-- | Compare two 'Amount's of arbitrary currencies
 compareAmounts :: (Currency c1, Currency c2) => Amount c1 -> Amount c2 -> Ordering
-compareAmounts = undefined
+compareAmounts a1 a2 = compare (toUSD a1) (toUSD a2)
