@@ -1,7 +1,9 @@
+-- | ISO 4217 compliant and other currencies
+
 module Data.Currency.Currencies
     ( -- * Currency Class
-      CurrencyType(..)
-    , Currency(..)
+      Currency(..)
+    , CurrencyType(..)
 
       -- * Currencies
     , BTC(..)
@@ -9,14 +11,6 @@ module Data.Currency.Currencies
     , EUR(..)
     , USD(..)
     ) where
-
-data CurrencyType
-  = Circulating -- ^ Currencies recognized as legal tender
-  | Local -- ^ Currencies with validity only in particular geographical localities
-  | Supranational -- ^ Currencies for procedural purposes and precious metals (X currencies)
-  | Cryptocurrency -- ^ Digital, cryptography based currencies
-  | Fictional -- ^ Currencies used in games, movies, novels, and other fictional setups
-  deriving (Show, Read, Eq)
 
 class (Show c, Eq c) => Currency c where
     currencyType :: c -> CurrencyType
@@ -28,10 +22,19 @@ class (Show c, Eq c) => Currency c where
     decimalDigits :: c -> Int
     -- | Currency UTF-8 symbol
     symbol :: c -> String
-
+    -- | Exchange rate with US Dollar (USD)
     exchangeUSD :: c -> Double
     -- | ISO 3166-1 alpha-2 Country codes where the currency is used
     countries :: c -> [String]
+
+data CurrencyType
+  = Circulating -- ^ Currencies recognized as legal tender
+  | Local -- ^ Currencies with validity only in particular geographical localities
+  | Supranational -- ^ Currencies for procedural purposes and precious metals (X currencies)
+  | Cryptocurrency -- ^ Digital, cryptography based currencies
+  | Fictional -- ^ Currencies used in games, movies, novels, and other fictional setups
+  deriving (Show, Read, Eq)
+
 
 -- | Bitcoin
 data BTC = BTC deriving (Show, Read, Eq)
