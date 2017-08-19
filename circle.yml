@@ -8,6 +8,8 @@ machine:
     - sudo apt-get update; sudo apt-get install stack
 
 dependencies:
+  override:
+    - stack setup
   cache_directories:
     - ".stack-work"
     - "~/.stack"
