@@ -1,8 +1,23 @@
+-- | Operations upon monetary 'Amount's
+--
+-- Converting amounts
+--
+-- >>> convert USD (Amount EUR 23482.34)
+-- Amount USD 27709.1612
+--
+-- >>>  prettyPrint $ convert USD (Amount EUR 23482.34)
+-- "USD 27,709.16"
+--
+-- Comparing amounts
+--
+-- >>> compareAmounts  (Amount EUR 1000) (Amount BTC 1)
+-- LT
+
 module Data.Currency.Amounts
     ( -- * Monetary Amount
       Amount(..)
 
-      -- * Conversions
+      -- * Converting
     , toUSD
     , fromUSD
     , convert
@@ -16,7 +31,7 @@ module Data.Currency.Amounts
 import Data.Currency.Currencies
 
 -- | Monetary amounts
-data (Currency c) => Amount c = Amount c Double deriving (Show, Read, Eq)
+data Amount c = Amount c Double deriving (Show, Read, Eq)
 
 instance (Currency c) => Ord (Amount c) where
     (Amount _ v1) <= (Amount _ v2) = v1 <= v2
