@@ -22,7 +22,7 @@ import Data.Monoid ((<>))
 prettyPrint :: (Currency c) => Amount c -> String
 prettyPrint = prettyPrintWith defaultConfig
 
--- | Pretty print a monetary amount with a custom configuration
+-- | Pretty print a monetary amount with a custom 'PrettyConfig' configuration
 prettyPrintWith :: (Currency c) => PrettyConfig -> Amount c -> String
 prettyPrintWith cnf (Amount currency amount) =
     prefixSymbol currency cnf
@@ -75,7 +75,7 @@ intersperseN n s ss
 data PrettyConfig = PrettyConfig
     { showDecimals :: Bool
     -- | Print four digits amounts as
-    -- /USD 1,000,00/ instead of /USD 1000.00/
+    -- /USD 1000,00/ instead of /USD 1,000.00/
     , compactFourDigitAmounts :: Bool
     -- | Replace the currency ISO code with its symbol to produce
     -- /$ 23.50/ instead of /USD 23.50/
@@ -88,6 +88,17 @@ data PrettyConfig = PrettyConfig
     } deriving (Show)
 
 
+-- | Default 'PrettyConfig' used in 'prettyPrint'
+--
+-- * Show decimals
+--
+-- * Compact four digit amounts
+--
+-- * Use ISO code
+--
+-- * Separate large amounts with comma
+--
+-- * Separate decimals with dot
 defaultConfig :: PrettyConfig
 defaultConfig = PrettyConfig
     { showDecimals = True
