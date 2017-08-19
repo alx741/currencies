@@ -56,7 +56,7 @@ spec = do
             prettyPrint (Amount USD 23875.00)  `shouldBe` "USD 23,875.00"
 
         it "can force 4-digit amounts separation" $ do
-            let config = defaultConfig { separateFourDigitAmounts = True}
+            let config = defaultConfig { compactFourDigitAmounts = False}
             prettyPrintWith config (Amount USD 2323.50)  `shouldBe` "USD 2,323.50"
             prettyPrintWith config (Amount EUR 4629.25)  `shouldBe` "EUR 4,629.25"
             prettyPrintWith config (Amount USD 23875.00)  `shouldBe` "USD 23,875.00"

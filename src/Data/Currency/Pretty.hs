@@ -3,13 +3,13 @@
 -- >>> prettyPrint (Amout USD 2342.2)
 -- "USD 2,342.20"
 module Data.Currency.Pretty
-    ( -- * Configuration
-      PrettyConfig(..)
-    , defaultConfig
-
-      -- * Pretty printing
-    , prettyPrint
+    ( -- * Pretty printing
+      prettyPrint
     , prettyPrintWith
+
+      -- * Configuration
+    , PrettyConfig(..)
+    , defaultConfig
 
     , module Data.Currency.Amounts
     ) where
@@ -53,8 +53,8 @@ changeDecimalSep currency cnf = replaceFst '.' (decimalSeparator cnf)
 
 largeAmountSeparate :: (Currency c) => c -> PrettyConfig -> String -> String
 largeAmountSeparate currency cnf amount
-    | separateFourDigitAmounts cnf = separated ++ decimal
-    | otherwise = if length integer <= 4 then amount else separated ++ decimal
+    | compactFourDigitAmounts cnf = if length integer <= 4 then amount else separated ++ decimal
+    | otherwise = separated ++ decimal
     where
         (integer, decimal) = span (/= '.') amount
         separated = reverse $ intersperseN 3 (largeAmountSeparator cnf) $ reverse integer
@@ -74,8 +74,14 @@ intersperseN n s ss
 
 data PrettyConfig = PrettyConfig
     { showDecimals :: Bool
-    , separateFourDigitAmounts :: Bool
+    -- | Print four digits amounts as
+    -- /USD 1,000,00/ instead of /USD 1000.00/
+    , compactFourDigitAmounts :: Bool
+    -- | Replace the currency ISO code with its symbol to produce
+    -- /$ 23.50/ instead of /USD 23.50/
     , useCurrencySymbol :: Bool
+    -- | Use the currency ISO code as suffix to produce
+    -- /23.50 USD/ instead of /USD 23.50/
     , suffixIsoCode :: Bool
     , largeAmountSeparator :: Char
     , decimalSeparator :: Char
@@ -85,7 +91,7 @@ data PrettyConfig = PrettyConfig
 defaultConfig :: PrettyConfig
 defaultConfig = PrettyConfig
     { showDecimals = True
-    , separateFourDigitAmounts = False
+    , compactFourDigitAmounts = True
     , useCurrencySymbol = False
     , suffixIsoCode = False
     , largeAmountSeparator = ','
