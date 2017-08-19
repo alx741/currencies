@@ -25,9 +25,9 @@ spec = do
 
         it "can omit decimals" $ do
             let config = defaultConfig { showDecimals = False }
-            prettyPrintWith config (Amount USD 23.50)  `shouldBe` "USD 24"
+            prettyPrintWith config (Amount USD 23.50)  `shouldBe` "USD 23"
             prettyPrintWith config (Amount USD 534.25)  `shouldBe` "USD 534"
-            prettyPrintWith config (Amount EUR 15.589)  `shouldBe` "EUR 16"
+            prettyPrintWith config (Amount EUR 15.589)  `shouldBe` "EUR 15"
 
         it "can use the currency symbol" $ do
             let config = defaultConfig { useCurrencySymbol = True }

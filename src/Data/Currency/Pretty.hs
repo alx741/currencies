@@ -56,7 +56,7 @@ largeAmountSeparate currency cnf amount
 toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
     | showDecimals cnf = printf format amount
-    | otherwise = printf "%.0f" amount
+    | otherwise = takeWhile (/= '.') $ printf "%.1f" amount
     where format = "%." <> (show $ decimalDigits currency) <> "f"
 
 intersperseN :: Eq a => Int -> a -> [a] -> [a]
