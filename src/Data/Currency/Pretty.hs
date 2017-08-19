@@ -1,7 +1,29 @@
--- | TODO: Pretty print monetary amounts like `$ 34.50`, `USD 3,456.29`,
--- `€ 32 433 938.23`...
--- >>> prettyPrint (Amout USD 2342.2)
+-- | Pretty print monetary amounts like:
+--
+-- * /$ 34.50/
+--
+-- * /USD 3,456.29/
+--
+-- * /€ 32 433 938.23/
+--
+-- Using default printing settings
+--
+-- >>> prettyPrint (Amount USD 2342.2)
 -- "USD 2,342.20"
+-- >>> prettyPrint (Amount EUR 45827.346)
+-- "EUR 45,827.35"
+--
+-- Using custom printing settings
+--
+-- >>> prettyPrintWith (defaultConfig { useCurrencySymbol = True }) (Amount USD 2342.2)
+-- "$ 2,342.20"
+-- >>> prettyPrintWith (defaultConfig { useCurrencySymbol = True }) (Amount EUR 2342.2)
+-- "€ 2,342.20"
+-- >>> prettyPrintWith (defaultConfig { showDecimals = False }) (Amount USD 25.50)
+-- "USD 25"
+--
+-- For more printing settings see 'PrettyConfig'
+
 module Data.Currency.Pretty
     ( -- * Pretty printing
       prettyPrint
