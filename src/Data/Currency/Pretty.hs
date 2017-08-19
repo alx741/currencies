@@ -33,17 +33,17 @@ prettyPrintWith cnf (Amount currency amount) =
 
 prefixSymbol :: (Currency c) => c -> PrettyConfig -> String -> String
 prefixSymbol currency cnf val
-    | useCurrencySymbol cnf = (symbol currency) <> " " <> val
+    | useCurrencySymbol cnf = symbol currency <> " " <> val
     | otherwise = val
 
 prefixCode :: (Currency c) => c -> PrettyConfig -> String -> String
 prefixCode currency cnf val
     | useCurrencySymbol cnf = val
-    | suffixIsoCode cnf = val <> " " <> (isoCode currency)
-    | otherwise = (isoCode currency) <> " " <> val
+    | suffixIsoCode cnf = val <> " " <> isoCode currency
+    | otherwise = isoCode currency <> " " <> val
 
 changeDecimalSep :: (Currency c) => c -> PrettyConfig -> String -> String
-changeDecimalSep currency cnf val = replaceFst '.' (decimalSeparator cnf) val
+changeDecimalSep currency cnf = replaceFst '.' (decimalSeparator cnf)
     where
         replaceFst :: Char -> Char -> String -> String
         replaceFst c c' [] = []
@@ -63,11 +63,11 @@ toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
     | showDecimals cnf = printf format amount
     | otherwise = takeWhile (/= '.') $ printf "%.1f" amount
-    where format = "%." <> (show $ decimalDigits currency) <> "f"
+    where format = "%." <> show (decimalDigits currency) <> "f"
 
 intersperseN :: Eq a => Int -> a -> [a] -> [a]
 intersperseN n s ss
-    | remainder == [] = ss
+    | null remainder = ss
     | otherwise = (take ++ [s]) ++ intersperseN n s remainder
     where (take, remainder) = splitAt n ss
 
