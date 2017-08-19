@@ -2,7 +2,6 @@ module Data.Currency.PrettySpec where
 
 import Test.Hspec
 import Data.Currency.Pretty
-import Data.Currency.Currencies
 import Data.Currency.Amounts
 
 spec :: Spec

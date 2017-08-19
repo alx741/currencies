@@ -10,10 +10,11 @@ module Data.Currency.Pretty
       -- * Pretty printing
     , prettyPrint
     , prettyPrintWith
+
+    , module Data.Currency.Amounts
     ) where
 
 import Text.Printf
-import Data.Currency.Currencies
 import Data.Currency.Amounts
 import Data.Monoid ((<>))
 

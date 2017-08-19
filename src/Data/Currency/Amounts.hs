@@ -9,6 +9,8 @@ module Data.Currency.Amounts
 
       -- * Comparing
     , compareAmounts
+
+    , module Data.Currency.Currencies
     ) where
 
 import Data.Currency.Currencies
