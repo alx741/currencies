@@ -1,7 +1,7 @@
 module Data.Currency.Currencies
     ( -- * Currency Class
       CurrencyType(..)
-      Currency(..)
+    , Currency(..)
 
     -- * Monetary Amount
     , Amount(..)
