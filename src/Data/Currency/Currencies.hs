@@ -3,7 +3,7 @@ module Data.Currency.Currencies
       CurrencyType(..)
     , Currency(..)
 
-    -- * Monetary Amount
+      -- * Monetary Amount
     , Amount(..)
 
       -- * Currencies
@@ -14,7 +14,10 @@ module Data.Currency.Currencies
     ) where
 
 -- | Monetary amounts
-data Amount a = Amount a Double deriving (Show, Read, Eq, Ord) -- FIXME: Ord manual instance
+data Amount c = Amount c Double deriving (Show, Read, Eq)
+
+instance (Currency c) => Ord (Amount c) where
+    (Amount _ v1) <= (Amount _ v2) = v1 <= v2
 
 data CurrencyType
   = Circulating -- ^ Currencies recognized as legal tender
@@ -24,7 +27,7 @@ data CurrencyType
   | Fictional -- ^ Currencies used in games, movies, novels, and other fictional setups
   deriving (Show, Read, Eq)
 
-class (Show c) => Currency c where
+class (Show c, Eq c) => Currency c where
     currencyType :: c -> CurrencyType
     -- | ISO 4217 Currency Code
     isoCode :: c -> String
@@ -40,16 +43,16 @@ class (Show c) => Currency c where
     countries :: c -> [String]
 
 -- | Bitcoin
-data BTC = BTC deriving (Show)
+data BTC = BTC deriving (Show, Read, Eq)
 
 -- | Chilean Peso
-data CLP = CLP deriving (Show)
+data CLP = CLP deriving (Show, Read, Eq)
 
 -- | European Union Euro
-data EUR = EUR deriving (Show)
+data EUR = EUR deriving (Show, Read, Eq)
 
 -- | US Dollar
-data USD = USD deriving (Show)
+data USD = USD deriving (Show, Read, Eq)
 
 
 instance Currency BTC where
