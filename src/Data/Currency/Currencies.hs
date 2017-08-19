@@ -70,7 +70,7 @@ instance Currency EUR where
     isoNumericCode _ = "978"
     decimalDigits _ = 2
     symbol _ = "€"
-    exchangeUSD _ = 1.17
+    exchangeUSD _ = 1.18
     countries _ = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
         , "ME", "NL", "PT", "RE", "BL", "PM", "SM", "SK", "SI", "ES"]

@@ -1,3 +1,7 @@
+-- | TODO: Pretty print monetary amounts like `$ 34.50`, `USD 3,456.29`,
+-- `€ 32 433 938.23`...
+-- >>> prettyPrint (Amout USD 2342.2)
+-- "USD 2,342.20"
 module Data.Currency.Pretty
     ( -- * Configuration
       PrettyConfig(..)
