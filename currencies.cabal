@@ -1,13 +1,13 @@
 name:                currencies
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            Currencies representation, pretty printing and conversion
 description:         ISO 4217 Currencies representation, pretty printing and conversion:
     .
-    * Represent monetary amouts of a particular currency in a type-safe manner
+    * Represent monetary amounts of a particular currency in a type-safe manner
     .
     * Convert amounts between different currencies
     .
-    * Print human readable amouts
+    * Print human readable amounts
 homepage:            https://github.com/alx741/currencies#readme
 license:             BSD3
 license-file:        LICENSE
