@@ -13,10 +13,10 @@ prettyPrint (Amount USD 2342.2)
 -- "USD 2,342.20"
 
 prettyPrint (Amount EUR 45827.346)
--- "UER 45,827.35"
+-- "EUR 45,827.35"
 
 prettyPrintWith (defaultConfig { useCurrencySymbol = True }) (Amount USD 2342.2)
--- "$ a,342.20"
+-- "$ 2,342.20"
 
 prettyPrintWith (defaultConfig { useCurrencySymbol = True }) (Amount EUR 2342.2)
 -- "€ 2,342.20"
@@ -30,6 +30,6 @@ convert USD (Amount EUR 23482.34)
 prettyPrint $ convert USD (Amount EUR 23482.34)
 -- "USD 27,709.16"
 
-compareAmounts  (Amount EUR 1000) (Amount BTC 1)
+compareAmounts  (Amount EUR 1000) (Amount BTC 1) -- Compare to Bitcoin
 -- LT
 ```
