@@ -13,6 +13,7 @@ spec = do
             prettyPrint (Amount USD 300.251)  `shouldBe` "USD 300.25"
             prettyPrint (Amount USD 3.4)  `shouldBe` "USD 3.40"
             prettyPrint (Amount EUR 15.589)  `shouldBe` "EUR 15.59"
+            prettyPrint (Amount USD (-300.251))  `shouldBe` "USD -300.25"
 
         it "respects currency decimal digits" $ do
             prettyPrint (Amount CLP 345.35)  `shouldBe` "CLP 345"
@@ -44,6 +45,7 @@ spec = do
         it "uses large amounts separators" $ do
             prettyPrint (Amount USD 32323.50)  `shouldBe` "USD 32,323.50"
             prettyPrint (Amount EUR 3827115.259)  `shouldBe` "EUR 3,827,115.26"
+            prettyPrint (Amount USD (-129553.53))  `shouldBe` "USD -129,553.53"
 
         it "can use a custom large amounts separator" $ do
             let config = defaultConfig { largeAmountSeparator = ' ' }

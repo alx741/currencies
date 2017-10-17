@@ -36,9 +36,9 @@ module Data.Currency.Pretty
     , module Data.Currency.Amounts
     ) where
 
-import Text.Printf
 import Data.Currency.Amounts
-import Data.Monoid ((<>))
+import Data.Monoid           ((<>))
+import Text.Printf
 
 -- | Pretty print a monetary amount using 'defaultConfig'
 prettyPrint :: (Currency c) => Amount c -> String
@@ -75,11 +75,15 @@ changeDecimalSep currency cnf = replaceFst '.' (decimalSeparator cnf)
 
 largeAmountSeparate :: (Currency c) => c -> PrettyConfig -> String -> String
 largeAmountSeparate currency cnf amount
-    | compactFourDigitAmounts cnf = if length integer <= 4 then amount else separated ++ decimal
-    | otherwise = separated ++ decimal
+    | compactFourDigitAmounts cnf = if length integer <= 4
+        then sign mSign unsignedAmount
+        else separatedAmount
+    | otherwise = separatedAmount
     where
-        (integer, decimal) = span (/= '.') amount
+        (mSign, unsignedAmount) = unSign amount
+        (integer, decimal) = span (/= '.') unsignedAmount
         separated = reverse $ intersperseN 3 (largeAmountSeparator cnf) $ reverse integer
+        separatedAmount = sign mSign $ separated ++ decimal
 
 toDecimalString :: (Currency c) => c -> PrettyConfig -> Double -> String
 toDecimalString currency cnf amount
@@ -93,20 +97,29 @@ intersperseN n s ss
     | otherwise = (take ++ [s]) ++ intersperseN n s remainder
     where (take, remainder) = splitAt n ss
 
+sign :: Maybe Char -> String -> String
+sign (Just s) a = s : a
+sign Nothing a  = a
+
+unSign :: String -> (Maybe Char, String)
+unSign ('-':s) = (Just '-', s)
+unSign ('+':s) = (Just '+', s)
+unSign s       = (Nothing, s)
+
 
 data PrettyConfig = PrettyConfig
-    { showDecimals :: Bool
+    { showDecimals            :: Bool
     -- | Print four digits amounts as
     -- /USD 1000,00/ instead of /USD 1,000.00/
     , compactFourDigitAmounts :: Bool
     -- | Replace the currency ISO code with its symbol to produce
     -- /$ 23.50/ instead of /USD 23.50/
-    , useCurrencySymbol :: Bool
+    , useCurrencySymbol       :: Bool
     -- | Use the currency ISO code as suffix to produce
     -- /23.50 USD/ instead of /USD 23.50/
-    , suffixIsoCode :: Bool
-    , largeAmountSeparator :: Char
-    , decimalSeparator :: Char
+    , suffixIsoCode           :: Bool
+    , largeAmountSeparator    :: Char
+    , decimalSeparator        :: Char
     } deriving (Show)
 
 

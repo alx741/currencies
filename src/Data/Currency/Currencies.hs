@@ -1,3 +1,5 @@
+-- {-# LANGUAGE EmptyDataDecls #-}
+
 -- | ISO 4217 compliant and other currencies
 
 module Data.Currency.Currencies
@@ -45,6 +47,9 @@ data CurrencyType
   | Fictional -- ^ Currencies used in games, movies, novels, and other fictional setups
   deriving (Show, Read, Eq)
 
+
+-- TODO: Strive to use 'Deriving Empty' with -XEmptyDataDecls in the future if it gets into GHC
+-- https://github.com/ghc-proposals/ghc-proposals/blob/master/proposals/0006-deriving-empty.rst
 
 -- | Brazilian Real
 data BRL = BRL deriving (Show, Read, Eq)

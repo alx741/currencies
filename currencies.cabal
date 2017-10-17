@@ -11,9 +11,9 @@ description:         ISO 4217 Currencies representation, pretty printing and con
 homepage:            https://github.com/alx741/currencies#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Daniel Campoverde [alx741]
+author:              Daniel Campoverde
 maintainer:          alx@sillybytes.net
-copyright:           2017 Daniel Campoverde [alx741]
+copyright:           2017 Daniel Campoverde
 category:            Data
 build-type:          Simple
 extra-source-files:  README.md
