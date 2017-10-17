@@ -51,14 +51,17 @@ spec = do
             let config = defaultConfig { largeAmountSeparator = ' ' }
             prettyPrintWith config (Amount USD 32323.50)  `shouldBe` "USD 32 323.50"
             prettyPrintWith config (Amount EUR 3827115.259)  `shouldBe` "EUR 3 827 115.26"
+            prettyPrintWith config (Amount USD (-129553.53))  `shouldBe` "USD -129 553.53"
 
         it "can avoid separating 4 digit amounts" $ do
             prettyPrint (Amount USD 2323.50)  `shouldBe` "USD 2323.50"
             prettyPrint (Amount EUR 4629.25)  `shouldBe` "EUR 4629.25"
             prettyPrint (Amount USD 23875.00)  `shouldBe` "USD 23,875.00"
+            prettyPrint (Amount EUR (-629.25))  `shouldBe` "EUR -629.25"
 
         it "can force 4-digit amounts separation" $ do
             let config = defaultConfig { compactFourDigitAmounts = False}
             prettyPrintWith config (Amount USD 2323.50)  `shouldBe` "USD 2,323.50"
             prettyPrintWith config (Amount EUR 4629.25)  `shouldBe` "EUR 4,629.25"
             prettyPrintWith config (Amount USD 23875.00)  `shouldBe` "USD 23,875.00"
+            prettyPrintWith config (Amount EUR (-629.25))  `shouldBe` "EUR -629.25"
