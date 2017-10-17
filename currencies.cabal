@@ -1,5 +1,5 @@
 name:                currencies
-version:             0.1.1.0
+version:             0.1.1.1
 synopsis:            Currencies representation, pretty printing and conversion
 description:         ISO 4217 Currencies representation, pretty printing and conversion:
     .
