@@ -49,8 +49,8 @@ prettyPrintWith :: (Currency c) => PrettyConfig -> Amount c -> String
 prettyPrintWith cnf (Amount currency amount) =
     prefixSymbol currency cnf
     $ prefixCode currency cnf
-    $ changeDecimalSep currency cnf
-    $ largeAmountSeparate currency cnf
+    $ changeDecimalSep cnf
+    $ largeAmountSeparate cnf
     $ toDecimalString currency cnf amount
 
 prefixSymbol :: (Currency c) => c -> PrettyConfig -> String -> String
@@ -64,17 +64,17 @@ prefixCode currency cnf val
     | suffixIsoCode cnf = val <> " " <> isoCode currency
     | otherwise = isoCode currency <> " " <> val
 
-changeDecimalSep :: (Currency c) => c -> PrettyConfig -> String -> String
-changeDecimalSep currency cnf = replaceFst '.' (decimalSeparator cnf)
+changeDecimalSep :: PrettyConfig -> String -> String
+changeDecimalSep cnf = replaceFst '.' (decimalSeparator cnf)
     where
         replaceFst :: Char -> Char -> String -> String
-        replaceFst c c' [] = []
+        replaceFst _ _ [] = []
         replaceFst c c' (s:ss)
             | s == c = c' : ss
             | otherwise = s : replaceFst c c' ss
 
-largeAmountSeparate :: (Currency c) => c -> PrettyConfig -> String -> String
-largeAmountSeparate currency cnf amount
+largeAmountSeparate :: PrettyConfig -> String -> String
+largeAmountSeparate cnf amount
     | compactFourDigitAmounts cnf = if length integer <= 4
         then sign mSign unsignedAmount
         else separatedAmount
@@ -94,8 +94,8 @@ toDecimalString currency cnf amount
 intersperseN :: Eq a => Int -> a -> [a] -> [a]
 intersperseN n s ss
     | null remainder = ss
-    | otherwise = (take ++ [s]) ++ intersperseN n s remainder
-    where (take, remainder) = splitAt n ss
+    | otherwise = (chunk ++ [s]) ++ intersperseN n s remainder
+    where (chunk, remainder) = splitAt n ss
 
 sign :: Maybe Char -> String -> String
 sign (Just s) a = s : a
