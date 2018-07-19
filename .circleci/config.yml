@@ -1,0 +1,18 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: haskell:8.2
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - stack-cache-v1
+            - run: stack setup
+            - run: stack build --fast --test --no-run-tests
+            - run: stack test
+            - save_cache:
+                key: stack-cache-v1
+                paths:
+                    - ".stack-work"
+                    - "~/.stack"
