@@ -13,6 +13,7 @@ module Data.Currency.Currencies
     , CAD(..)
     , CLP(..)
     , EUR(..)
+    , GBP(..)
     , JPY(..)
     , KPW(..)
     , KRW(..)
@@ -65,8 +66,11 @@ data CLP = CLP deriving (Show, Read, Eq)
 
 -- | European Union Euro
 data EUR = EUR deriving (Show, Read, Eq)
+--
+-- | British Pound Sterling
+data GBP = GBP deriving (Show, Read, Eq)
 
--- | Japanse Yen
+-- | Japenese Yen
 data JPY = JPY deriving (Show, Read, Eq)
 
 -- | North Korean Won
@@ -140,6 +144,15 @@ instance Currency EUR where
     countries _ = ["AD", "AT", "BE", "CY", "EE", "FI", "FR", "DE", "GR"
         , "GP", "IE", "IT", "LV", "LT", "LU", "MT", "MQ", "YT", "MC"
         , "ME", "NL", "PT", "RE", "BL", "PM", "SM", "SK", "SI", "ES"]
+
+instance Currency GBP where
+    currencyType _ = Circulating
+    isoCode = show
+    isoNumericCode _ = "826"
+    decimalDigits _ = 2
+    symbol _ = "£"
+    exchangeUSD _ = 1.31
+    countries _ = ["GB"]
 
 instance Currency JPY where
     currencyType _ = Circulating
